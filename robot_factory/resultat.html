@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            border: 1px solid black;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: blanchedalmond;
+        }
+
+        thead tr {
+            background-color: rgba(255, 217, 134, 0.299);
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>n°</th>
+                <th>Question</th>
+                <th>Réponse</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>La liste de tous les utilisateurs</td>
+                <td>SELECT * FROM `users`</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>La liste de tous les utilisateurs rangée par noms de famille</td>
+                <td>SELECT first_name, last_name FROM `users` ORDER BY last_name</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Le dernier utilisateur inscrit</td>
+                <td>SELECT first_name, registration_date FROM `users` ORDER BY registration_date DESC LIMIT 1</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>La liste de tous les utilisateurs fêtant leur anniversaire ce mois-ci</td>
+                <td>SELECT first_name, last_name, birthdate FROM `users` WHERE birthdate LIKE '_____08%'</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Le nombre total d'utilisateurs</td>
+                <td>SELECT COUNT(first_name) FROM `users`</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>La liste de tous les utilisateurs associés à leurs villes respectives</td>
+                <td>SELECT users.first_name, users.last_name, addresses.city FROM `addresses` JOIN users ON users.id = addresses.user_id</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>La liste de tous les utilisateurs vivant à une adresse sans numéro</td>
+                <td>SELECT user_id FROM `addresses` WHERE number IS null;</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>La liste de tous les produits dont le prix est supérieur à 1 000 €</td>
+                <td>SELECT name, price FROM `products` WHERE price > 1000;</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>La liste de tous les produits associés à leurs photos respectives</td>
+                <td>SELECT products.name, pictures.url FROM `products` JOIN pictures ON pictures.product_id =
+                    products.id;</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>La liste de tous les produits appartenant à la catégorie « Voyage »</td>
+                <td>SELECT products.name, categories.title <br>
+                    FROM `products_categories` <br>
+                    JOIN products ON products.id = products_categories.product_id <br>
+                    JOIN categories ON categories.id = products_categories.category_id<br>
+                    WHERE categories.title = "Voyage"<br>
+                </td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>La liste de tous les utilisateurs ayant effectué plus de dix commandes</td>
+                <td>
+                    SELECT users.id, COUNT(orders.user_id)<br>
+                    FROM users<br>
+                    INNER JOIN orders ON users.id = orders.user_id<br>
+                    GROUP BY user_id<br>
+                    HAVING COUNT(orders.user_id) > 10<br>
+                </td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>La liste de tous les produits achetés par le premier utilisateur inscri</td>
+                <td>
+                    SELECT products.name, products.price <br>
+                    FROM `products` <br>
+                    INNER JOIN products_orders ON products.id = products_orders.product_id <br>
+                    INNER JOIN orders ON orders.id = products_orders.order_id <br>
+                    WHERE orders.user_id = (SELECT id FROM users ORDER BY registration_date ASC LIMIT 1) <br>
+                </td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>traducteur</td>
+                <td>
+                    Cannot add or update a child row: a foreign key constraint fails (`db_highfive`.`#sql-132c_278`, CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`EmployeeID`) REFERENCES `employees` (`EmployeeID`) ON DELETE CASCADE ON UPDATE CASCADE)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

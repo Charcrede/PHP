@@ -1,0 +1,43 @@
+<?php
+    if (isset($_POST['nom'])) {
+        $myRobot->setName($_POST['nom']);
+    }
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Factory</title>
+</head>
+
+<body>
+    <?php if (!isset($_POST['nom']) && !isset($_POST['behavior'])) : ?>
+    <form method="post">
+        <input type="text" name="nom" placeholder="nom" pattern="[A-Za-z]{3}" title="je réfléchis avant de poser mes actes, je bois pas l'eau par mes narines" required>
+        <input type="text" name="behavior" placeholder="comportement">
+        <button>Valider</button>
+    </form>
+    <?php ?>
+<?php else: ?>
+    <h1>
+        <?= $myRobot->greet() ?>
+    </h1>
+    <p>
+        <?= $myRobot->getCurrentDateTime() ?>.
+    </p>
+    <p>
+        <?= $myRobot->chooseRandomNumberAndParity() ?>. 
+    </p>
+    <p> Mon nom à l'envers s'écrit
+        <?= $myRobot->reverseName() ?> Ah. Ah. Ah. 
+    </p>
+    <p>
+        <?= $myRobot->robotBehavior() ?>
+    </p>
+<?php endif; ?>
+</body>
+
+</html>
